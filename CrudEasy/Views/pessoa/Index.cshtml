@@ -15,21 +15,27 @@
     <script src="~/Scripts/myApp.js"></script>
     
 </head>
-<body>
-    <div  data-ng-app="myApp" data-ng-controller="pessoaCtrl"> 
+<body style="background-color: #ddd">
+    <div class="col-md-12" ng-app="myApp" ng-controller="pessoaCtrl"> 
+        <h1 style="text-align:center; padding:10px 0;">Create, Read, Update e Delete:</h1>
 
-        <div style="margin: 10px auto;">
-            <input type="hidden" name="pessoa.PessoaId" data-ng-model="pessoa.PessoaId"  value="{{pesso.data.PessoaId}}"/>
-            Nome:<input type="text" name="pessoa.Nome" data-ng-model="pessoa.Nome"  value="{{pessoa.data.Nome}}"/>
-            Email:<input type="email" name="pessoa.Email" data-ng-model="pessoa.Email" value="{{pessoa.data.Email}}"/>
-            Endereço:<input type="text" name="pessoa.Endereco" data-ng-model="pessoa.Endereco" value="{{pessoa.data.Endereco}}"/>
-            Idade:<input type="number" name="pessoa.Idade" data-ng-model="pessoa.Idade" value="{{pessoa.data.Idade}}" />
-            <input type="button" value="Cadastrar" name="btnSave" data-ng-click="salvar(pessoa)" />
-            <input type="button" value="Atualizar" name="btnSave" data-ng-click="atualizar(pessoa)" />
-        </div>
+        <form class="form-inline" style="margin-top:10px; margin-bottom:10px">
+            <input type="hidden"   ng-model="pessoa.PessoaId"/>
+            <label>Nome:</label>
+            <input class="form-control" placeholder="Nome" ng-model="pessoa.Nome" />
+            <label>Email:</label>
+            <input class="form-control" placeholder="Email" name="pessoa.Email" ng-model="pessoa.Email"/>
+            <label>Endereço:</label>
+            <input class="form-control" placeholder="Endereço" name="pessoa.Endereco" ng-model="pessoa.Endereco"/>
+            <label>Idade:</label>
+            <input class="form-control" type="number" placeholder="Idade" name="pessoa.Idade" ng-model="pessoa.Idade"/>
+            <input  type="button" class="btn btn-primary" value="Cadastrar" name="btnSalavar" ng-disabled="!pessoa.Nome || !pessoa.Email || !pessoa.Endereco || !pessoa.Idade || desbilitaBtnsalvar" ng-click="salvar(pessoa)"/>
+            <input  type="button" class="btn btn-warning" value="Atualizar" name="btnAtualizar" ng-disabled="desabilitaBtnatualizar" ng-click="atualizar(pessoa)"/>
+        </form>
 
-        <table class="table">
+        <table class="table table-striped" >
             <tr>
+                <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Endereço</th>
@@ -37,12 +43,13 @@
                 <th>Opção</th>
 
             </tr>
-            <tr data-ng-repeat="pes in Pessoa.data">
+            <tr ng-repeat="pes in Pessoas.data">
+                <td>{{pes.PessoaId}}</td>
                 <td>{{pes.Nome}}</td>
                 <td>{{pes.Email}}</td>
                 <td>{{pes.Endereco}}</td>
                 <td>{{pes.Idade}}</td>
-                <td><a style="margin-right: 8px;" href="#" data-ng-click="editarPessoa(pes.PessoaId)">Editar</a><a href="#" data-ng-click="deletarPessoa(pes.PessoaId)">Deletar</a></td>
+                <td><a class="btn-sm btn-warning" style="margin-right: 10px;" href="#" ng-click="editarPessoa(pes.PessoaId)">Editar</a><a href="#" class="btn-sm btn-danger" ng-click="deletarPessoa(pes.PessoaId)">Deletar</a></td>
             </tr>
         </table>
         

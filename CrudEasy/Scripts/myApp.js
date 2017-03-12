@@ -2,9 +2,11 @@
 myApp.controller('pessoaCtrl', function ($scope, $http) {
 
     
-    $scope.Pessoa = "";
+    $scope.desabilitaBtnsalvar = false;
+    $scope.desabilitaBtnatualizar = true;
+    $scope.Pessoas = {};
     $http.get("/pessoa/GetPessoa").then(function (result) {
-        $scope.Pessoa = result;
+        $scope.Pessoas = result;
         console.log(result);
 
     });
@@ -13,8 +15,9 @@ myApp.controller('pessoaCtrl', function ($scope, $http) {
 
         $http.post("/pessoa/SalvarPessoa", { p: pessoa })
         .then(function (result) {
-
-            $scope.Pessoa = result;
+            
+            $scope.Pessoas = result;
+            delete $scope.pessoa;
         })
         , function (result) {
 
@@ -22,12 +25,15 @@ myApp.controller('pessoaCtrl', function ($scope, $http) {
         }
     }
 
-    $scope.pessoa = "";
+    $scope.pessoa = {};
     $scope.editarPessoa = function (id) {
 
         $http.post("/pessoa/EditarPessoa", { id: id })
         .then(function (result) {
+            
             $scope.pessoa = result.data;
+            $scope.desbilitaBtnsalvar= true;
+            $scope.desabilitaBtnatualizar = false;
             console.log(result.data);
         }),
         function (result) {
@@ -40,22 +46,19 @@ myApp.controller('pessoaCtrl', function ($scope, $http) {
     
     $scope.atualizar = function (pessoa) {
 
-        if (pessoa.PessoaId > 0) {
-
-
             $http.post("/pessoa/AtualizarPessoa", { p: pessoa })
             .then(function (result) {
-                $scope.Pessoa = result;
+                $scope.desabilitaBtnatualizar = true;
+                $scope.desbilitaBtnsalvar = false;
+                $scope.Pessoas = result;
+                delete $scope.pessoa;
             })
             , function (result) {
                 console.log(result);
 
             }
-        }
-        else {
-           
-            alert("nao é possivel editar pessoa que nao seja cadastrada");
-        }
+        
+        
     }
 
     $scope.deletarPessoa = function (PessoaId) {
@@ -63,7 +66,8 @@ myApp.controller('pessoaCtrl', function ($scope, $http) {
         $http.post("/pessoa/DeletarPessoa", { id: PessoaId })
         .then(function (result) {
 
-            $scope.Pessoa = result;
+            $scope.Pessoas = result;
+            delete $scope.pessoa;
             
         })
         , function (result) {
