@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pessoas</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/myApp.js"></script>
+    
+</head>
+<body>
+    <div  data-ng-app="myApp" data-ng-controller="pessoaCtrl"> 
+
+        <div style="margin: 10px auto;">
+            <input type="hidden" name="pessoa.PessoaId" data-ng-model="pessoa.PessoaId"  value="{{pesso.data.PessoaId}}"/>
+            Nome:<input type="text" name="pessoa.Nome" data-ng-model="pessoa.Nome"  value="{{pessoa.data.Nome}}"/>
+            Email:<input type="email" name="pessoa.Email" data-ng-model="pessoa.Email" value="{{pessoa.data.Email}}"/>
+            Endereço:<input type="text" name="pessoa.Endereco" data-ng-model="pessoa.Endereco" value="{{pessoa.data.Endereco}}"/>
+            Idade:<input type="number" name="pessoa.Idade" data-ng-model="pessoa.Idade" value="{{pessoa.data.Idade}}" />
+            <input type="button" value="Cadastrar" name="btnSave" data-ng-click="salvar(pessoa)" />
+            <input type="button" value="Atualizar" name="btnSave" data-ng-click="atualizar(pessoa)" />
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Idade</th>
+                <th>Opção</th>
+
+            </tr>
+            <tr data-ng-repeat="pes in Pessoa.data">
+                <td>{{pes.Nome}}</td>
+                <td>{{pes.Email}}</td>
+                <td>{{pes.Endereco}}</td>
+                <td>{{pes.Idade}}</td>
+                <td><a style="margin-right: 8px;" href="#" data-ng-click="editarPessoa(pes.PessoaId)">Editar</a><a href="#" data-ng-click="deletarPessoa(pes.PessoaId)">Deletar</a></td>
+            </tr>
+        </table>
+        
+    </div>
+</body>
+</html>
