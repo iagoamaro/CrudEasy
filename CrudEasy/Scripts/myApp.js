@@ -1,6 +1,7 @@
 ﻿var myApp = angular.module('myApp', []);
 myApp.controller('pessoaCtrl', function ($scope, $http) {
 
+    
     $scope.Pessoa = "";
     $http.get("/pessoa/GetPessoa").then(function (result) {
         $scope.Pessoa = result;
